@@ -6,35 +6,12 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/18 10:49:22 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/30 17:01:16 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/02/11 10:04:21 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-int		session(t_file *file)
-{
-	file->fractal.cre = -0.7;
-	file->fractal.cim = 0.27016;
-	file->fractal.newre = 0;
-	file->fractal.newim = 0;
-	file->fractal.oldim = 0;
-	file->fractal.oldre = 0;
-	file->fractal.movex = -5;
-	file->fractal.movey = -5;
-	file->fractal.maxIterations = 100;
-	file->tx = 0;
-	file->ty = 0;
-	file->zoom.zoom = 100;
-	file->zoom.top = 1;
-	file->zoom.left = 1;
-	file->zoom.dx = 0;
-	file->zoom.dy = 0;
-	file->zoom.px = 0;
-	file->zoom.py = 0;
-	return (1);
-}
 
 void	ft_init(t_file *file)
 {
@@ -43,16 +20,16 @@ void	ft_init(t_file *file)
 		RED = 255;
 		GREEN = 255;
 		BLUE = 255;
-		file->color.r_random = 10;
-		file->color.g_random = 40;
-		file->color.b_random = 255;
+		file->color.r_random = 100;
+		file->color.g_random = 0;
+		file->color.b_random = 40;
 	}
 }
 
 int		new_image(t_file *file)
 {
 	if ((MLX = mlx_init()))
-		if ((WIN = mlx_new_window(MLX, WIDTH, HEIGHT, "ORAGE")))
+		if ((WIN = mlx_new_window(MLX, WIDTH, HEIGHT, file->name)))
 			return (1);
 	return (0);
 }

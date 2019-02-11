@@ -6,7 +6,7 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/03 15:08:40 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/24 17:00:47 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/02/04 17:12:24 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,8 @@
 
 # include <string.h>
 # include <get_next_line.h>
-# include <libc.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct		s_list
 {

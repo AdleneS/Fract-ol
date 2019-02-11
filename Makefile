@@ -6,7 +6,7 @@
 #    By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/02 17:01:24 by asaba        #+#   ##    ##    #+#        #
-#    Updated: 2019/01/24 19:26:25 by asaba       ###    #+. /#+    ###.fr      #
+#    Updated: 2019/02/04 16:39:42 by asaba       ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,7 +16,7 @@ NAME = fractol
 CC = gcc
 
 SRC = srcs/main.c srcs/input.c srcs/fractal.c srcs/display.c
-SRC += srcs/newimg.c srcs/error.c
+SRC += srcs/newimg.c srcs/error.c srcs/session.c srcs/get_input.c
 
 OBJ = $(SRC:.c=.o)
 

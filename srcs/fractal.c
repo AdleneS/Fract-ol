@@ -6,18 +6,18 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/24 17:52:25 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/30 17:43:28 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/02/11 10:01:22 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void		*start_fractol(void *fvoid)
+void			*start_fractol(void *fvoid)
 {
-	int x;
-	int y;
-	t_file *file;
+	int		x;
+	int		y;
+	t_file	*file;
 
 	file = (t_file *)fvoid;
 	y = file->th_i;
@@ -34,78 +34,87 @@ void		*start_fractol(void *fvoid)
 	return (file);
 }
 
-void		mandelbrot(t_file *file, int x, int y)
+static void		getcolor(t_file *file, double mu)
 {
-	int i = 0;
-	
+	RED = mu * 3 * (file->color.r_random % 255);
+	GREEN = mu * 3 * (file->color.g_random % 255);
+	BLUE = mu * 3 * (file->color.b_random % 255);
+}
+
+void			mandelbrot(t_file *file, int x, int y)
+{
+	int		i;
+	double	mu;
+
 	i = -1;
-	CIM = y / file->zoom.zoom + file->fractal.movey;
-	CRE = x / file->zoom.zoom + file->fractal.movex;
-	file->fractal.newre = 0;
-	file->fractal.newim = 0;
-	file->fractal.oldim = 0;
-	file->fractal.oldre = 0;
-	while (++i < file->fractal.maxIterations) 
+	mu = 0;
+	CIM = y / ZOOM + file->fractal.movey;
+	CRE = x / ZOOM + file->fractal.movex;
+	NRE = 0;
+	NIM = 0;
+	OIM = 0;
+	ORE = 0;
+	while (++i < file->fractal.maxiterations)
 	{
 		ORE = NRE;
 		OIM = NIM;
 		NRE = ORE * ORE - OIM * OIM + CRE;
 		NIM = 2.0 * ORE * OIM + CIM;
-		if((NRE * NRE + NIM * NIM) > 4)
-			break;
+		if ((NRE * NRE + NIM * NIM) > 4)
+			break ;
 	}
-	RED = i * file->color.r_random;
-	GREEN = i * file->color.g_random;
-	BLUE = 2 * i * file->color.b_random;
+	mu = i + 1 - log(log((NRE * NRE + NIM * NIM))) / log(2);
+	mu /= file->fractal.maxiterations;
+	getcolor(file, mu);
 	ft_pixel_put(file, x, y);
 }
 
-void		burningship(t_file *file, int x, int y)
+void			burningship(t_file *file, int x, int y)
 {
-	int i;
+	int		i;
+	double	mu;
 
 	i = -1;
-	CIM = y / file->zoom.zoom + file->fractal.movey;
-	CRE = x / file->zoom.zoom + file->fractal.movex;
+	mu = 0;
+	CIM = y / ZOOM + file->fractal.movey;
+	CRE = x / ZOOM + file->fractal.movex;
 	NRE = 0;
 	NIM = 0;
-	while (++i < file->fractal.maxIterations) 
+	while (++i < file->fractal.maxiterations)
 	{
 		ORE = NRE;
 		OIM = NIM;
 		NRE = fabs((ORE * ORE - OIM * OIM) + CRE);
 		NIM = fabs(2 * ORE * OIM + CIM);
-		if((NRE * NRE + NIM * NIM) > 4)
-			break;
+		if ((NRE * NRE + NIM * NIM) > 4)
+			break ;
 	}
-
-		RED = i % 255;
-		GREEN = i % 10;
-		BLUE = 2 * i % file->fractal.maxIterations;
-		ft_pixel_put(file, x, y);
+	mu = i + 1 - log(log(sqrt(NRE * NRE + NIM * NIM))) / log(2);
+	mu /= file->fractal.maxiterations;
+	getcolor(file, mu);
+	ft_pixel_put(file, x, y);
 }
 
-void		julia(t_file *file, int x, int y)
+void			julia(t_file *file, int x, int y)
 {
-		int i;
-		
-		i = -1;
-		NIM = y / file->zoom.zoom + file->fractal.movey;
-		NRE =  x / file->zoom.zoom + file->fractal.movex;
-		while (++i < file->fractal.maxIterations)
-		{
-			ORE = NRE;
-			OIM = NIM;
-			NRE = ORE * ORE - OIM * OIM + CRE;
-			NIM = 2 * ORE * OIM + CIM;
-			if((NRE * NRE + NIM * NIM) > 4)
-				break;
-		}
-		RED = i + file->color.r_random;
-		GREEN = i * file->color.g_random;
-		BLUE = 2 * i * file->color.b_random; 
-		/*RED = i % 255;
-		GREEN = i % 150;
-		BLUE = 2 * i % file->fractal.maxIterations;*/
-		ft_pixel_put(file, x, y);
+	int		i;
+	double	mu;
+
+	i = -1;
+	mu = 0;
+	NIM = y / ZOOM + file->fractal.movey;
+	NRE = x / ZOOM + file->fractal.movex;
+	while (++i < file->fractal.maxiterations)
+	{
+		ORE = NRE;
+		OIM = NIM;
+		NRE = ORE * ORE - OIM * OIM + CRE;
+		NIM = 2 * ORE * OIM + CIM;
+		if ((NRE * NRE + NIM * NIM) > 4)
+			break ;
+	}
+	mu = i + 1 - log(log(sqrt(NRE * NRE + NIM * NIM))) / log(2);
+	mu /= file->fractal.maxiterations;
+	getcolor(file, mu);
+	ft_pixel_put(file, x, y);
 }
